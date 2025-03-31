@@ -55,7 +55,7 @@ function filterAndDisplayCoins() {
       if (selectedOption === "high") return coin.market_cap > 1000000000;
       if (selectedOption === "medium")
         return coin.market_cap > 100000000 && coin.market_cap <= 1000000000;
-      if (selectedOption === "low") return coin.market_cap <= 100000000;
+      if (selectedOption === "low") return coin.market_cap <= 5000000;
     });
   }
 
