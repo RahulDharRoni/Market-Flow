@@ -17,14 +17,14 @@
     <header>
       <div id="logo">
         <a href="./index.html">
-          <img src="./img/logo-white.png" alt="" />
+          <h1 style="color: white; font-family:cursive">Market Flow</h1>
         </a>
       </div>
       <ul class="nav" id="nav">
         <ul class="navLogo">
           <a href="./index.html">
-            <img src="./img/logo-white.png" alt="" />
-          </a>
+          <h1 style="color: white; font-family:cursive">Market Flow</h1>
+        </a>
         </ul>
 
         <li class="nav-link"><a href="./index.html">Home</a></li>
@@ -167,21 +167,32 @@
     <!-- coin and stock start -->
     <section id="full_coin_stock">
       <div class="coin_section">
-        <button id="coinBtn">Show Coin Card</button>
-        <button id="stockBtn">Show Stock Card</button>
+        <div>
+            <button id="coinBtn">Show Coin Card</button>
+            
+        </div>
+        <div class="filter">
+            <form>
+                <label for="filterInput">Search</label>
+                <input type="text" id="filterInput" placeholder="Filter by name...">
+            </form>
+            <select id="optionFilter">
+                <option value="" disabled selected>Your Choice</option>
+                <option value="high">High Market Cap</option>
+                <option value="medium">Medium Market Cap</option>
+                <option value="low">Low Market Cap</option>
+            </select>
+            <p>Price Range:</p>
+            <input type="range" min="1" max="50000" value="25000" class="slider" id="priceRange">
+        </div>
+    </div>
+
+    <div class="cards" id="coinCards"></div>
+
+    <div id="coinDetails"></div>
       </div>
 
       <div class="cards" id="coinCards"></div>
-
-      <div class="card" id="stockCard">
-        <img src="https://via.placeholder.com/150" alt="Stock Image" />
-        <h3>Stock Card</h3>
-        <p>
-          This is a description of the stock. Discover more about stock details
-          and market trends.
-        </p>
-        <button>Read More</button>
-      </div>
 
       <div id="coinDetails"></div>
     </section>

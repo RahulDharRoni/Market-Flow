@@ -1,20 +1,14 @@
 const coinBtn = document.getElementById("coinBtn");
-const stockBtn = document.getElementById("stockBtn");
 const coinCards = document.getElementById("coinCards");
-const stockCard = document.getElementById("stockCard");
 const coinDetails = document.getElementById("coinDetails");
+const filterInput = document.getElementById("filterInput");
+const priceRange = document.getElementById("priceRange");
+const optionFilter = document.getElementById("optionFilter");
+let allCoins = [];
 
 coinBtn.addEventListener("click", () => {
   coinCards.style.display = "grid";
-  stockCard.style.display = "none";
-  coinDetails.style.display = "none";
   fetchCoinData();
-});
-
-stockBtn.addEventListener("click", () => {
-  stockCard.style.display = "block";
-  coinCards.style.display = "none";
-  coinDetails.style.display = "none";
 });
 
 async function fetchCoinData() {
@@ -25,33 +19,69 @@ async function fetchCoinData() {
         params: {
           vs_currency: "usd",
           order: "market_cap_desc",
-          per_page: 16,
+          per_page: 50,
           page: 1,
           sparkline: false,
         },
       }
     );
 
-    const coins = response.data;
-    coinCards.innerHTML = "";
+    allCoins = response.data;
+    filterAndDisplayCoins();
 
-    coins.forEach((coin) => {
-      const card = document.createElement("div");
-      card.className = "card";
-      card.innerHTML = `
-                        <img src="${coin.image}" alt="${coin.name}" width="100">
-                        <h3>${coin.name}</h3>
-                        <p>Current Price: $${coin.current_price}</p>
-                        <p>Market Cap: $${coin.market_cap.toLocaleString()}</p>
-                        <button onclick="fetchCoinDetails('${
-                          coin.id
-                        }')">Read More</button>
-                    `;
-      coinCards.appendChild(card);
-    });
+    filterInput.addEventListener("input", filterAndDisplayCoins);
+    priceRange.addEventListener("input", filterAndDisplayCoins);
+    optionFilter.addEventListener("change", filterAndDisplayCoins);
   } catch (error) {
     console.error("Error fetching coin data:", error);
   }
+}
+
+function filterAndDisplayCoins() {
+  let filteredCoins = allCoins;
+
+  const searchTerm = filterInput.value.toLowerCase();
+  const maxPrice = parseInt(priceRange.value);
+  const selectedOption = optionFilter.value;
+
+  if (searchTerm) {
+    filteredCoins = filteredCoins.filter((coin) =>
+      coin.name.toLowerCase().includes(searchTerm)
+    );
+  }
+
+  if (selectedOption) {
+    filteredCoins = filteredCoins.filter((coin) => {
+      if (selectedOption === "high") return coin.market_cap > 1000000000;
+      if (selectedOption === "medium")
+        return coin.market_cap > 100000000 && coin.market_cap <= 1000000000;
+      if (selectedOption === "low") return coin.market_cap <= 100000000;
+    });
+  }
+
+  filteredCoins = filteredCoins.filter(
+    (coin) => coin.current_price <= maxPrice
+  );
+  displayCoins(filteredCoins);
+}
+
+function displayCoins(coins) {
+  coinCards.innerHTML = "";
+
+  coins.forEach((coin) => {
+    const card = document.createElement("div");
+    card.className = "card";
+    card.innerHTML = `
+                    <img src="${coin.image}" alt="${coin.name}" width="100">
+                    <h3>${coin.name}</h3>
+                    <p>Current Price: $${coin.current_price}</p>
+                    <p>Market Cap: $${coin.market_cap.toLocaleString()}</p>
+                    <button onclick="fetchCoinDetails('${
+                      coin.id
+                    }')">Read More</button>
+                `;
+    coinCards.appendChild(card);
+  });
 }
 
 async function fetchCoinDetails(id) {
@@ -74,7 +104,7 @@ async function fetchCoinDetails(id) {
                       0,
                       300
                     )}...</p>
-                    <button onclick="coinDetails.style.display = 'none'">Close</button>
+                    <button onclick="coinDetails.style.display = 'none'; coinCards.style.display = 'grid';">Close</button>
                 `;
 
     coinDetails.style.display = "block";

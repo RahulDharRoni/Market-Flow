@@ -22,7 +22,11 @@ body {
   background-color: var(--darkblue);
   color: var(--white);
 }
-
+.logo {
+  width: 20px;
+  height: 20px;
+  background-color: white;
+}
 /* Header */
 header {
   width: 90%;
@@ -96,8 +100,8 @@ header {
 
 /* coin section start  */
 #full_coin_stock {
-  background-color: rgb(189, 189, 189);
-  padding: 20px;
+  background-color: rgb(235, 235, 235);
+  padding: 50px 30px;
   border: 5px solid var(--primarycolor);
   border-radius: 10px;
 }
@@ -106,8 +110,9 @@ header {
   gap: 20px;
   margin-bottom: 20px;
   width: 100%;
-  justify-content: center;
-  text-align: center;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
 }
 .cards {
   display: none;
@@ -123,15 +128,25 @@ header {
   text-align: center;
   color: #000;
 }
+.show_button {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  background: white;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  color: #000;
+}
 #coinDetails {
   display: none;
   background: white;
+  color: black;
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  width: 80%;
   margin-top: 20px;
-  color: #000;
+  width: 100%;
 }
 button {
   padding: 10px 20px;
@@ -140,6 +155,25 @@ button {
   cursor: pointer;
   background-color: #007bff;
   color: white;
+}
+.filter {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  background: white;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  color: #000;
+  width: 70%;
+}
+.filter input,
+.filter select,
+.filter .slider {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  outline: none;
 }
 
 @media screen and (min-width: 800px) {
